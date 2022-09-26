@@ -15,7 +15,7 @@ Numerical columns are scaled using logarithm (log) transformation with the natur
 
 **Removing outliers**<br>
 Outliers are detected using the Scikit-learn (Sklearn) Local Outlier Factor algorithm. This is described in the Scikit documentation 2.7. *Novelty and Outlier Detection*:<br>
->>*The neighbors.LocalOutlierFactor (LOF) algorithm computes score (called local outlier factor) reflecting the degree oabnormality of the observations. It measures the locadensity deviation of a given data point with respect to itneighbors. The idea is to detect the samples that have substantially lower density than their neighbors*.[1]
+>*The neighbors.LocalOutlierFactor (LOF) algorithm computes score (called local outlier factor) reflecting the degree oabnormality of the observations. It measures the locadensity deviation of a given data point with respect to itneighbors. The idea is to detect the samples that have substantially lower density than their neighbors*.[1]
 
 Models are trained with a dataset that has target column outliers removed, as well as a dataset with feature column outliers removed. Results show that these two datasets perform very similarly.
 
@@ -23,23 +23,23 @@ Models are trained with a dataset that has target column outliers removed, as we
 As mentioned in the Data Cleaning section, some columns are associated with each other. The input feature dataset may have collinearity or multicollinearity problems. Collinearity is when two columns have a linear relationship, and multicollinearity is when a column has a linear relationship with two or more columns. When modelling Multiple Linear Regression (MLR), if there exists linear relationships between features in the input dataset, the estimated coefficients will become unstable due to the huge variance of coefficients. Therefore, it is preferred to have less non-independent feature columns in the input data set. The following is a mathematical explanation of why variance of estimated coefficients will become huge when features in a dataset are not independent of each other:<br>
 The estimated coefficients in a multiple linear regression is $ \hat{\beta} = (x^{T}x)^{-1}x^{T}y$<br>
 To derive the variance of estimated coefficients:<br>
-Let $ (x^{T}x)^{-1}x^{T} $ be A and A is a constant matrix.<br>
-$ Var(\hat{\beta}) $ = $ Var((x^{T}x)^{-1}x^{T}y) $<br>
-= $ Var(AY) = E[((AY)^{2})] - (E[AY])^{2} $
-= $ E[A^{2}Y^{2}] - (E[AY])^{2} $
-= $ A^{2}E[Y^{2}] - A^{2}(E[Y])^{2} $
-= $ A^{2}Var(Y) $
-= $ A Var(Y) A^{T} $<br>
-$ Var(\hat{\beta}) = \sigma^{2}(x^{T}x)^{-1} $<br>
-The inverse of $ (x^{T}x) $ is $ \frac{1}{det|x^{T}x|}adj(x^{T}x) $.<br>
-If $ x $ is not full rank, then $ (x^{T}x) $ is also a singular matrix,
-so $ (x^{T}x) $ is not inversible.
-$ {det|x^{T}x|} $ will be zero, so the $ Var(\hat{\beta}) $ will blow up.<br>
-If $ x $ is closed to full rank, then $ (x^{T}x) $ is closed to being non-invertible.
-The $ Var(\hat{\beta}) $ will become huge.[2] (Cosma, S., 2015).<br>
+Let $(x^{T}x)^{-1}x^{T}$ be A and A is a constant matrix.<br>
+$Var(\hat{\beta})$ = $Var((x^{T}x)^{-1}x^{T}y)$<br>
+= $Var(AY) = E[((AY)^{2})] - (E[AY])^{2}$
+= $E[A^{2}Y^{2}] - (E[AY])^{2}$
+= $A^{2}E[Y^{2}] - A^{2}(E[Y])^{2}$
+= $A^{2}Var(Y)$
+= $A Var(Y) A^{T}$<br>
+$Var(\hat{\beta}) = \sigma^{2}(x^{T}x)^{-1}$<br>
+The inverse of $(x^{T}x)$ is $\frac{1}{det|x^{T}x|}adj(x^{T}x)$.<br>
+If $x$ is not full rank, then $(x^{T}x)$ is also a singular matrix,
+so $(x^{T}x)$ is not inversible.
+${det|x^{T}x|}$ will be zero, so the $Var(\hat{\beta})$ will blow up.<br>
+If $x$ is closed to full rank, then $(x^{T}x)$ is closed to being non-invertible.
+The $Var(\hat{\beta})$ will become huge.[2] (Cosma, S., 2015).<br>
 The following methods are used to analyse the collinearity and multicollinearity of the dataset:
-1. Three tests analysing collinearity:
->>(1) Between continuous data columns using the Pearson correlation method.<br>
+1. Three tests analysing collinearity:<br>
+(1) Between continuous data columns using the Pearson correlation method.<br>
 (2) Between categorical data columns using the Chi-Square test.<br>
 (3) Between each categorical data column and each continuous data column using one-way Welch’s ANOVA analysis.
 
